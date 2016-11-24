@@ -2,12 +2,12 @@
 var gewirr = function(startx, starty) {
 
     var spot = function(echtx, echty) {
-        this.x = random(echtx - 20, echtx + 20);
-        this.y = random(echty - 20, echty + 20);
+        this.x = random(echtx - 100, echtx + 100);
+        this.y = random(echty - 100, echty + 100);
         this.px = this.x;
         this.py = this.y;
     };
-    var anzahl = 5;
+    var anzahl = round(random(3,6));
     var arr = [];
 
     for (var i = 0; i < anzahl; i++) {
@@ -47,8 +47,8 @@ var gewirr = function(startx, starty) {
 
 
             //rect(-10,-10,width*2,height*2);
-            arr[i].x += random(-1.5, 1.5);
-            arr[i].y += random(-1.5, 1.5);
+            arr[i].x += random(-0.5, 0.5);
+            arr[i].y += random(-0.5, 0.5);
 
         }
 
@@ -56,16 +56,24 @@ var gewirr = function(startx, starty) {
 
 
     };
+    
+    this.reset = function(){
+      for (var i = 0; i<anzahl;i++){
+      arr[i].x=arr[i].px;
+      arr[i].y=arr[i].py;
+      
+      }
+    };
 
 
 };
 
 fill(255, 255, 255, 30);
 var gewarr = [];
-var anzahl = 48;
+var anzahl = 51;
 for (var i = 0; i < anzahl; i++) {
 
-    gewarr[i] = new gewirr(random(0, width), random(0, height));
+    gewarr[i] = new gewirr(random(-width, width*2), random(-height, height*2));
     gewarr[i].color = [random(100, 230), random(100, 230), random(100, 230)];
 }
 strokeWeight(1);
@@ -80,4 +88,10 @@ var draw = function() {
 
 
     rect(-10, -10, width * 2, height * 2);
+};
+
+var mouseReleased = function(){
+  for (var i =0; i< anzahl;i++){
+   gewarr[i].reset();   
+  }
 };
