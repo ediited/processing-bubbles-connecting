@@ -1,43 +1,41 @@
-var anzahl = 1;
+var anzahl = 50;
 var abprall = false;
 frameRate(60);
+var kugeln = [];
 
 var kugel = function(){
- this.x=0;
- this.y=0;
- this.xdir=0;
- this.ydir=0;
+ this.x= floor(random(-width*2,0));
+ this.y= floor(random(-height*2,0));
+ this.xdir= round(random(1,3));
+ this.ydir= this.xdir;
+ 
+ this.draw= function() {
+    if (this.x>width+10||this.y>height+10){
+    this.reset();
+    }
+    this.x = this.x+this.xdir;
+    this.y = this.y+this.ydir;
+    stroke(200, 20-sqrt(pow(this.xdir*20,2)), 20);
+    fill(200, 200-sqrt(pow(this.xdir*20,2)), 20,50);
+    strokeWeight(this.xdir);
+    ellipse(this.x,this.y,sqrt(pow(this.xdir*10,2)),sqrt(pow(this.xdir*10,2)));
+ };
+ this.reset = function(){
+    this.x= floor(random(-width*2,0));
+    this.y= floor(random(-height*2,0));
+    this.xdir = round(random(1,3));    
+    this.ydir = this.xdir;
+ };
 };
-
-var bubble = new kugel();
-bubble.xdir = 3;
-bubble.ydir = 3;
-
-
-var kugeln = [];
 for (var i = 0 ; i < anzahl ; i++ ){
     kugeln[i]=new kugel();
-    kugeln[i].x= floor(random(-width*2,0));
-    kugeln[i].y= floor(random(-height*2,0));
-    kugeln[i].xdir = round(random(1,3));
-    kugeln[i].ydir = kugeln[i].xdir;
-    
 }
-
+background(240,240,240);
 var draw = function() {
-    background(255, 255, 255);
-    for (var i = 0; i < anzahl ; i++ ){
-        if (kugeln[i].x>width+10||kugeln[i].y>height+10){
-        kugeln[i].x= floor(random(-width*2,0));
-        kugeln[i].y= floor(random(-height*2,0));
-        kugeln[i].xdir = round(random(1,3));
-        kugeln[i].ydir = kugeln[i].xdir;
-        }
-    kugeln[i].x = kugeln[i].x+kugeln[i].xdir;
-    kugeln[i].y = kugeln[i].y+kugeln[i].ydir;
-   stroke(0, 200-sqrt(pow(kugeln[i].xdir*20,2)), 255);
-   fill(0, 200-sqrt(pow(kugeln[i].xdir*20,2)), 255,50);
-   //strokeWeight(kugeln[i].xdir);
-    ellipse(kugeln[i].x,kugeln[i].y,sqrt(pow(kugeln[i].xdir*10,2)),sqrt(pow(kugeln[i].xdir*10,2)));
+    fill(255,255,255,8);
+    rect(-width,-height,width*2,height*2);
+    //background(255, 255, 255);
+    for (var i = 0; i<anzahl;i++){
+     kugeln[i].draw();   
     }
 };
